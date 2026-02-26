@@ -1,6 +1,19 @@
+// --- Intégration POS Square ---
+const posSquare = require('./pos_square');
+
+// Endpoint pour récupérer les paiements Square (optionnel, pour les cafés intégrés)
+app.get('/pos/square/payments', async (req, res) => {
+  try {
+    const data = await posSquare.listPayments();
+    res.json(data);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 // ...existing code...
 
 // --- Début du backend propre ---
+require('dotenv').config();
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -9,9 +22,19 @@ const sqlite3 = require('sqlite3').verbose();
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*' } });
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : [
+      'http://localhost:3000',
+      'https://votre-domaine-prod.com',
+      'https://www.votre-domaine-prod.com'
+    ];
+const io = new Server(server, { cors: { origin: allowedOrigins } });
 
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 app.use(express.json());
 // Route racine pour vérifier le backend
 app.get('/', (req, res) => {
@@ -19,7 +42,7 @@ app.get('/', (req, res) => {
 });
 
 // Initialisation de la base de données
-const db = new sqlite3.Database('./backend/clickdrink.db');
+const db = new sqlite3.Database(process.env.DB_PATH || './backend/clickdrink.db');
 
 // Création des tables principales (commandes, produits, options, horaires, etc.)
 db.serialize(() => {
