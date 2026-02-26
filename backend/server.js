@@ -1,3 +1,4 @@
+// ...existing code...
 
 // --- Début du backend propre ---
 const express = require('express');
@@ -12,6 +13,10 @@ const io = new Server(server, { cors: { origin: '*' } });
 
 app.use(cors());
 app.use(express.json());
+// Route racine pour vérifier le backend
+app.get('/', (req, res) => {
+  res.send('Bienvenue sur le backend Click & Drink !');
+});
 
 // Initialisation de la base de données
 const db = new sqlite3.Database('./backend/clickdrink.db');
@@ -103,6 +108,8 @@ app.patch('/orders/:id/status', (req, res) => {
   db.run('UPDATE orders SET status = ? WHERE id = ?', [status, id], function(err) {
     if (err) return res.status(500).json({ error: err.message });
     if (this.changes === 0) return res.status(404).json({ error: 'Commande non trouvée' });
+    // Émission WebSocket
+    io.emit('orderStatusChanged', { orderId: id, status });
     res.json({ success: true });
   });
 });
@@ -120,6 +127,24 @@ app.get('/orders', (req, res) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
   });
+});
+
+// Endpoint horaires
+app.get('/schedules', (req, res) => {
+  res.json([
+    { day: 'Lundi', open: '08:00', close: '18:00' },
+    { day: 'Mardi', open: '08:00', close: '18:00' },
+    { day: 'Mercredi', open: '08:00', close: '18:00' },
+    { day: 'Jeudi', open: '08:00', close: '18:00' },
+    { day: 'Vendredi', open: '08:00', close: '18:00' },
+    { day: 'Samedi', open: '09:00', close: '16:00' },
+    { day: 'Dimanche', open: null, close: null }
+  ]);
+});
+
+// Endpoint statuts
+app.get('/status', (req, res) => {
+  res.json({ open: true, paused: false, closed: false });
 });
 
 // WebSocket pour commandes en temps réel
