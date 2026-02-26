@@ -1,3 +1,5 @@
+
+// --- Début du backend propre ---
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -65,6 +67,44 @@ db.serialize(() => {
     pause_start TEXT,
     pause_end TEXT
   )`);
+});
+
+// --- ROUTES ET ENDPOINTS ---
+
+// Endpoint pour récupérer toutes les commandes avec leurs items détaillés
+app.get('/orders-with-items', (req, res) => {
+  db.all('SELECT * FROM orders ORDER BY created_at DESC', [], (err, orders) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (!orders.length) return res.json([]);
+    const orderIds = orders.map(o => o.id);
+    db.all(`SELECT oi.*, p.name as product_name FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id WHERE oi.order_id IN (${orderIds.map(() => '?').join(',')})`, orderIds, (err2, items) => {
+      if (err2) return res.status(500).json({ error: err2.message });
+      // Regroupe les items par commande
+      const itemsByOrder = {};
+      items.forEach(item => {
+        if (!itemsByOrder[item.order_id]) itemsByOrder[item.order_id] = [];
+        itemsByOrder[item.order_id].push(item);
+      });
+      // Ajoute les items à chaque commande
+      const result = orders.map(order => ({
+        ...order,
+        items: itemsByOrder[order.id] || []
+      }));
+      res.json(result);
+    });
+  });
+});
+
+// Endpoint pour changer le statut d'une commande
+app.patch('/orders/:id/status', (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  if (!status) return res.status(400).json({ error: 'Statut requis' });
+  db.run('UPDATE orders SET status = ? WHERE id = ?', [status, id], function(err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) return res.status(404).json({ error: 'Commande non trouvée' });
+    res.json({ success: true });
+  });
 });
 
 // API de base (exemples)
