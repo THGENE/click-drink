@@ -122,10 +122,6 @@ const bars = [{
       toppingsCategories: {},
       link: 'https://www.instagram.com/kapeparis/'
     },
-  
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
   {
     id: 4,
     name: 'Umami Matcha Café',
@@ -159,7 +155,7 @@ import L from 'leaflet';
     link: 'https://www.lebonbon.fr/paris/pepites/coffee-shop-matcha-savourer-tatamis-2e-paris/'
   },
   {
-    id: ,
+    id: 5,
     name: 'Brown Coffee Shop',
     address: 'Adresse à compléter',
     arrondissement: '',
@@ -189,6 +185,118 @@ import L from 'leaflet';
     sugars: ['0%', '30%', '50%', '100%'],
     toppingsCategories: {},
     link: 'https://www.instagram.com/browncoffeeshop/'
+  },
+  {
+    id: 6,
+    name: 'Café Nuances',
+    address: 'Adresse à compléter',
+    arrondissement: '',
+    type: 'Coffee Shop',
+    price: '€€',
+    rating: 9.0,
+    reviews: 80,
+    tags: ['Café', 'Ambiance', 'Spécialités'],
+    quote: 'Un café parisien moderne, parfait pour découvrir des nuances de saveurs.',
+    slots: ['09:00', '09:30', '10:00', '10:30'],
+    photos: [
+      '/images/nuances-photo1.jpg',
+      '/images/nuances-photo2.jpg',
+      '/images/nuances-photo3.jpg',
+      '/images/nuances-photo4.jpg',
+      '/images/nuances-photo5.jpg',
+      '/images/nuances-photo6.jpg'
+    ],
+    lat: 48.8667,
+    lng: 2.3631,
+    menu: [
+      { name: 'Café Nuances', price: '5€' },
+      { name: 'Pâtisserie maison', price: '4.5€' },
+      { name: 'Iced Coffee', price: '5.5€' },
+    ],
+    hours: 'Lun-Dim : 09h-18h',
+    reviewsList: [
+      { user: 'Paul', note: 10, text: 'Un café unique, ambiance moderne !' },
+      { user: 'Léa', note: 9, text: 'Découverte de saveurs, staff accueillant.' },
+    ],
+    promo: '',
+    bases: ['Café nuances chaud', 'Café nuances glacé'],
+    milks: ['Vache', 'Avoine', 'Amande'],
+    sugars: ['0%', '30%', '50%', '100%'],
+    toppingsCategories: {},
+    link: 'https://www.instagram.com/cafenuances/'
+  },
+  {
+    id: 7,
+    name: 'Bønne',
+    address: 'Adresse à compléter',
+    arrondissement: '',
+    type: 'Coffee Shop',
+    price: '€€',
+    rating: 8.9,
+    reviews: 60,
+    tags: ['Café', 'Ambiance', 'Spécialités'],
+    quote: 'Un coffee shop scandinave, ambiance chaleureuse et douceurs nordiques.',
+    slots: ['09:00', '09:30', '10:00', '10:30'],
+    photos: [
+      '/images/bonne-photo1.jpg', // Correspond à https://www.instagram.com/p/DTcqFEuDSj1/
+      '/images/bonne-photo2.jpg'  // Correspond à https://www.instagram.com/p/DUKuRGFiINF/
+    ],
+    lat: 48.8667,
+    lng: 2.3631,
+    menu: [
+      { name: 'Café filtre', price: '4€' },
+      { name: 'Cinnamon roll', price: '3.5€' },
+      { name: 'Iced Coffee', price: '5€' },
+    ],
+    hours: 'Lun-Dim : 09h-18h',
+    reviewsList: [
+      { user: 'Anna', note: 10, text: 'Ambiance nordique, café délicieux !' },
+      { user: 'Jonas', note: 9, text: 'Super accueil, pâtisseries maison.' },
+    ],
+    promo: '',
+    bases: ['Café filtre', 'Café glacé'],
+    milks: ['Vache', 'Avoine', 'Amande'],
+    sugars: ['0%', '30%', '50%', '100%'],
+    toppingsCategories: {},
+    link: 'https://www.instagram.com/bonneparis/'
+  },
+  {
+    id: 8,
+    name: 'Fika',
+    address: 'Adresse à compléter',
+    arrondissement: '',
+    type: 'Coffee Shop',
+    price: '€€',
+    rating: 9.2,
+    reviews: 70,
+    tags: ['Café', 'Ambiance', 'Scandinave'],
+    quote: 'Un coin suédois à Paris, parfait pour une pause gourmande et cosy.',
+    slots: ['09:00', '09:30', '10:00', '10:30'],
+    photos: [
+      '/images/fika-photo1.jpg', // https://www.instagram.com/p/CuHfGrpNob4/
+      '/images/fika-photo2.jpg', // https://www.instagram.com/p/CuoqMVkr4pk/
+      '/images/fika-photo3.jpg', // https://www.instagram.com/p/DJml-WOI1o1/
+      '/images/fika-photo4.jpg', // https://www.instagram.com/p/DOGyesOCEup/
+      '/images/fika-photo5.jpg'  // https://www.instagram.com/p/DOtse2sCBJx/
+    ],
+    lat: 48.8667,
+    lng: 2.3631,
+    menu: [
+      { name: 'Kanelbullar', price: '3€' },
+      { name: 'Café filtre', price: '4€' },
+      { name: 'Iced Coffee', price: '5€' },
+    ],
+    hours: 'Lun-Dim : 09h-18h',
+    reviewsList: [
+      { user: 'Sven', note: 10, text: 'Un vrai fika suédois, ambiance chaleureuse !' },
+      { user: 'Emma', note: 9, text: 'Pâtisseries délicieuses, staff accueillant.' },
+    ],
+    promo: '',
+    bases: ['Café filtre', 'Café glacé'],
+    milks: ['Vache', 'Avoine', 'Amande'],
+    sugars: ['0%', '30%', '50%', '100%'],
+    toppingsCategories: {},
+    link: 'https://www.instagram.com/fikaparis/'
   }
 ];
 // Composant principal Home
