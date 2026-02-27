@@ -1,17 +1,3 @@
-// --- Intégration POS Square ---
-const posSquare = require('./pos_square');
-
-// Endpoint pour récupérer les paiements Square (optionnel, pour les cafés intégrés)
-app.get('/pos/square/payments', async (req, res) => {
-  try {
-    const data = await posSquare.listPayments();
-    res.json(data);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-// ...existing code...
-
 // --- Début du backend propre ---
 require('dotenv').config();
 const express = require('express');
@@ -36,6 +22,19 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
+
+// --- Intégration POS Square ---
+const posSquare = require('./pos_square');
+// Endpoint pour récupérer les paiements Square (optionnel, pour les cafés intégrés)
+app.get('/pos/square/payments', async (req, res) => {
+  try {
+    const data = await posSquare.listPayments();
+    res.json(data);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // Route racine pour vérifier le backend
 app.get('/', (req, res) => {
   res.send('Bienvenue sur le backend Click & Drink !');
