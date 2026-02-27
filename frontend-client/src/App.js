@@ -4,12 +4,9 @@ import { useEffect } from 'react';
 import { io } from 'socket.io-client';
 
 
-import NavBar from './components/NavBar';
 import Home from './pages/Home';
-import Products from './pages/Products';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
-import TrendingBars from './pages/TrendingBars';
 
 
 function App() {
@@ -27,8 +24,6 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/trending" element={<TrendingBars />} />
-        <Route path="/products" element={<Products />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<Orders />} />
       </Routes>

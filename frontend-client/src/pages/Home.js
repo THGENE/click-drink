@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import NavBar from '../components/NavBar';
 import MapFilters from '../components/MapFilters';
 import MapWithCustomMarkers from '../components/MapWithCustomMarkers';
+import BarCard from '../components/BarCard';
 import Step2Base from '../components/Step2Base';
 
 // Bars à matcha et cafés indépendants issus des articles du Bonbon
@@ -303,6 +303,7 @@ const bars = [{
 export default function Home() {
   const [selectedShop, setSelectedShop] = useState(null);
   const [page, setPage] = useState(1);
+  const [hoveredBarId, setHoveredBarId] = useState(null);
   const barsPerPage = 5;
   const totalPages = Math.ceil(bars.length / barsPerPage);
   const paginatedBars = bars.slice((page - 1) * barsPerPage, page * barsPerPage);
@@ -314,7 +315,7 @@ export default function Home() {
         <div style={{ display: 'flex', gap: 32 }}>
           <section style={{ flex: 2 }}>
             {paginatedBars.map(bar => (
-              <NavBar key={bar.id} bar={bar} />
+              <BarCard key={bar.id} bar={bar} />
             ))}
             {/* Pagination conditionnelle */}
             {totalPages > 1 && (
@@ -331,7 +332,7 @@ export default function Home() {
             <h3>Carte des tendances</h3>
             <MapFilters />
             <div style={{ width: '100%', height: 320 }}>
-              <MapWithCustomMarkers bars={bars} />
+              <MapWithCustomMarkers bars={bars} hoveredBarId={hoveredBarId} />
             </div>
           </aside>
         </div>
