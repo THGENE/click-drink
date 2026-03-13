@@ -1,127 +1,107 @@
 import React, { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
 import MapFilters from '../components/MapFilters';
 import MapWithCustomMarkers from '../components/MapWithCustomMarkers';
 import BarCard from '../components/BarCard';
 import Step2Base from '../components/Step2Base';
 
 // Bars à matcha et cafés indépendants issus des articles du Bonbon
-const bars = [{
-          id: 1,
-          name: 'Les Crèmes',
-          address: 'Adresse à compléter',
-          arrondissement: '',
-          type: 'Coffee Shop',
-          price: '€€',
-          rating: 9.1,
-          reviews: 100,
-          tags: ['Café', 'Ambiance', 'Spécialités'],
-          quote: 'Un coffee shop gourmand, parfait pour savourer des crèmes et douceurs maison.',
-          slots: ['09:00', '09:30', '10:00', '10:30'],
-          photos: [
-            '/images/cremes-cadre.jpg',
-            '/images/cremes-produit1.jpg',
-            '/images/cremes-produit2.jpg'
-          ],
-          videos: [
-            '/videos/cremes-ambiance.mp4'
-          ],
-          lat: 48.8667,
-          lng: 2.3631,
-          menu: [
-            { name: 'Crème café', price: '5€' },
-            { name: 'Pâtisserie maison', price: '4.5€' },
-            { name: 'Iced Coffee', price: '5.5€' },
-          ],
-          hours: 'Lun-Dim : 09h-18h',
-          reviewsList: [
-            { user: 'Nina', note: 10, text: 'Des crèmes délicieuses, ambiance cosy !' },
-            { user: 'Max', note: 9, text: 'Super accueil, produits gourmands.' },
-          ],
-          promo: '',
-          bases: ['Crème café', 'Café latte chaud'],
-          milks: ['Vache', 'Avoine', 'Amande'],
-          sugars: ['0%', '30%', '50%', '100%'],
-          toppingsCategories: {},
-          link: 'https://www.instagram.com/lescremesparis/'
-        },
-      {
-        id: 2,
-        name: 'Bingsutt',
-        address: 'Adresse à compléter',
-        arrondissement: '',
-        type: 'Coffee Shop',
-        price: '€€',
-        rating: 9.2,
-        reviews: 110,
-        tags: ['Café', 'Ambiance', 'Spécialités'],
-        quote: 'Un coffee shop à l’ambiance unique, parfait pour découvrir des saveurs originales.',
-        slots: ['09:00', '09:30', '10:00', '10:30'],
-        photos: [
-          '/images/bingsutt-cadre.jpg',
-          '/images/bingsutt-produit1.jpg',
-          '/images/bingsutt-produit2.jpg'
-        ],
-        lat: 48.8667,
-        lng: 2.3631,
-        menu: [
-          { name: 'Café Latte', price: '5€' },
-          { name: 'Pâtisserie maison', price: '4.5€' },
-          { name: 'Iced Coffee', price: '5.5€' },
-        ],
-        hours: 'Lun-Dim : 09h-18h',
-        reviewsList: [
-          { user: 'Sophie', note: 10, text: 'Un lieu original, produits délicieux !' },
-          { user: 'Alex', note: 9, text: 'Ambiance dépaysante, staff très sympa.' },
-        ],
-        promo: '',
-        bases: ['Café latte chaud', 'Café latte glacé'],
-        milks: ['Vache', 'Avoine', 'Amande'],
-        sugars: ['0%', '30%', '50%', '100%'],
-        toppingsCategories: {},
-        link: 'https://www.instagram.com/bingsutt.paris/'
-      },
-    {
-      id: 3,
-      name: 'Kapé',
-      address: 'Adresse à compléter',
-      arrondissement: '',
-      type: 'Coffee Shop',
-      price: '€€',
-      rating: 9.3,
-      reviews: 120,
-      tags: ['Café', 'Ambiance', 'Spécialités'],
-      quote: 'Un coffee shop chaleureux, parfait pour découvrir des saveurs originales.',
-      slots: ['09:00', '09:30', '10:00', '10:30'],
-      photos: [
-        '/images/kape-cadre.jpg',
-        '/images/kape-produit1.jpg',
-        '/images/kape-produit2.jpg'
-      ],
-      videos: [
-        '/videos/kape-video.mp4'
-      ],
-      lat: 48.8667,
-      lng: 2.3631,
-      menu: [
-        { name: 'Café Latte', price: '5€' },
-        { name: 'Pâtisserie maison', price: '4.5€' },
-        { name: 'Iced Coffee', price: '5.5€' },
-      ],
-      hours: 'Lun-Dim : 09h-18h',
-      reviewsList: [
-        { user: 'Julie', note: 10, text: 'Un café original, ambiance très sympa !' },
-        { user: 'Antoine', note: 9, text: 'Découverte de saveurs, staff accueillant.' },
-      ],
-      promo: '',
-      bases: ['Café latte chaud', 'Café latte glacé'],
-      milks: ['Vache', 'Avoine', 'Amande'],
-      sugars: ['0%', '30%', '50%', '100%'],
-      toppingsCategories: {},
-      link: 'https://www.instagram.com/kapeparis/'
-    },
+const bars = [
+  {
+    id: 1,
+    name: 'Les Crèmes',
+    address: 'Adresse à compléter',
+    arrondissement: '',
+    type: 'Coffee Shop',
+    price: '€€',
+    rating: 9.1,
+    reviews: 100,
+    tags: ['Café', 'Ambiance', 'Spécialités'],
+    quote: 'Un coffee shop gourmand, parfait pour savourer des crèmes et douceurs maison.',
+    slots: ['09:00', '09:30', '10:00', '10:30'],
+    photos: [],
+    videos: ['/videos/cremes-ambiance.mp4'],
+    lat: 48.8667,
+    lng: 2.3631,
+    menu: [
+      { name: 'Crème café', price: '5€' },
+      { name: 'Pâtisserie maison', price: '4.5€' },
+      { name: 'Iced Coffee', price: '5.5€' },
+    ],
+    hours: 'Lun-Dim : 09h-18h',
+    reviewsList: [
+      { user: 'Nina', note: 10, text: 'Des crèmes délicieuses, ambiance cosy !' },
+      { user: 'Max', note: 9, text: 'Super accueil, produits gourmands.' },
+    ],
+    promo: '',
+    bases: ['Crème café', 'Café latte chaud'],
+    milks: ['Vache', 'Avoine', 'Amande'],
+    sugars: ['0%', '30%', '50%', '100%'],
+    toppingsCategories: {},
+    link: 'https://www.instagram.com/lescremesparis/'
+  },
+  {
+    id: 2,
+    name: 'Bingsutt',
+    address: 'Adresse à compléter',
+    arrondissement: '',
+    type: 'Coffee Shop',
+    price: '€€',
+    rating: 9.2,
+    reviews: 110,
+    tags: ['Café', 'Ambiance', 'Spécialités'],
+    quote: 'Un coffee shop à l’ambiance unique, parfait pour découvrir des saveurs originales.',
+    slots: ['09:00', '09:30', '10:00', '10:30'],
+    photos: [],
+    lat: 48.8667,
+    lng: 2.3631,
+    menu: [
+      { name: 'Café Latte', price: '5€' },
+      { name: 'Pâtisserie maison', price: '4.5€' },
+      { name: 'Iced Coffee', price: '5.5€' },
+    ],
+    hours: 'Lun-Dim : 09h-18h',
+    reviewsList: [
+      { user: 'Sophie', note: 10, text: 'Un lieu original, produits délicieux !' },
+      { user: 'Alex', note: 9, text: 'Ambiance dépaysante, staff très sympa.' },
+    ],
+    promo: '',
+    bases: ['Café latte chaud', 'Café latte glacé'],
+    milks: ['Vache', 'Avoine', 'Amande'],
+    sugars: ['0%', '30%', '50%', '100%'],
+    toppingsCategories: {},
+    link: 'https://www.instagram.com/bingsutt.paris/'
+  },
+  {
+    id: 3,
+    name: 'Kapé',
+    address: 'Adresse à compléter',
+    arrondissement: '',
+    type: 'Coffee Shop',
+    price: '€€',
+    rating: 9.3,
+    reviews: 120,
+    tags: ['Café', 'Ambiance', 'Spécialités'],
+    photos: [],
+    videos: ['/videos/kape-video.mp4'],
+    lat: 48.8667,
+    lng: 2.3631,
+    menu: [
+      { name: 'Café Latte', price: '5€' },
+      { name: 'Pâtisserie maison', price: '4.5€' },
+      { name: 'Iced Coffee', price: '5.5€' },
+    ],
+    hours: 'Lun-Dim : 09h-18h',
+    reviewsList: [
+      { user: 'Julie', note: 10, text: 'Un café original, ambiance très sympa !' },
+      { user: 'Antoine', note: 9, text: 'Découverte de saveurs, staff accueillant.' },
+    ],
+    promo: '',
+    bases: ['Café latte chaud', 'Café latte glacé'],
+    milks: ['Vache', 'Avoine', 'Amande'],
+    sugars: ['0%', '30%', '50%', '100%'],
+    toppingsCategories: {},
+    link: 'https://www.instagram.com/kapeparis/'
+  },
   {
     id: 4,
     name: 'Umami Matcha Café',
@@ -134,7 +114,7 @@ const bars = [{
     tags: ['Matcha', 'Japonais', 'Healthy'],
     quote: 'Le spot incontournable pour les amateurs de matcha, ambiance zen et pâtisseries japonaises.',
     slots: ['09:00', '09:30', '10:00', '10:30'],
-    photos: ['/images/umami-matcha.jpg', '/images/umami-matcha-produit1.jpg', '/images/umami-matcha-produit2.jpg'],
+    photos: [],
     lat: 48.8667,
     lng: 2.3631,
     menu: [
@@ -166,8 +146,7 @@ const bars = [{
     tags: ['Café', 'Ambiance', 'Spécialités'],
     quote: 'Un coffee shop convivial, parfait pour savourer des boissons et douceurs maison.',
     slots: ['09:00', '09:30', '10:00', '10:30'],
-    photos: ['/images/brown-cadre.jpg', '/images/brown-produit.jpg'],
-    videos: ['/videos/brown-ambiance.mp4'],
+    photos: [],
     lat: 48.8667,
     lng: 2.3631,
     menu: [
@@ -198,14 +177,7 @@ const bars = [{
     tags: ['Café', 'Ambiance', 'Spécialités'],
     quote: 'Un café parisien moderne, parfait pour découvrir des nuances de saveurs.',
     slots: ['09:00', '09:30', '10:00', '10:30'],
-    photos: [
-      '/images/nuances-photo1.jpg',
-      '/images/nuances-photo2.jpg',
-      '/images/nuances-photo3.jpg',
-      '/images/nuances-photo4.jpg',
-      '/images/nuances-photo5.jpg',
-      '/images/nuances-photo6.jpg'
-    ],
+    photos: [],
     lat: 48.8667,
     lng: 2.3631,
     menu: [
@@ -237,10 +209,7 @@ const bars = [{
     tags: ['Café', 'Ambiance', 'Spécialités'],
     quote: 'Un coffee shop scandinave, ambiance chaleureuse et douceurs nordiques.',
     slots: ['09:00', '09:30', '10:00', '10:30'],
-    photos: [
-      '/images/bonne-photo1.jpg', // Correspond à https://www.instagram.com/p/DTcqFEuDSj1/
-      '/images/bonne-photo2.jpg'  // Correspond à https://www.instagram.com/p/DUKuRGFiINF/
-    ],
+    photos: [],
     lat: 48.8667,
     lng: 2.3631,
     menu: [
@@ -272,13 +241,7 @@ const bars = [{
     tags: ['Café', 'Ambiance', 'Scandinave'],
     quote: 'Un coin suédois à Paris, parfait pour une pause gourmande et cosy.',
     slots: ['09:00', '09:30', '10:00', '10:30'],
-    photos: [
-      '/images/fika-photo1.jpg', // https://www.instagram.com/p/CuHfGrpNob4/
-      '/images/fika-photo2.jpg', // https://www.instagram.com/p/CuoqMVkr4pk/
-      '/images/fika-photo3.jpg', // https://www.instagram.com/p/DJml-WOI1o1/
-      '/images/fika-photo4.jpg', // https://www.instagram.com/p/DOGyesOCEup/
-      '/images/fika-photo5.jpg'  // https://www.instagram.com/p/DOtse2sCBJx/
-    ],
+    photos: [],
     lat: 48.8667,
     lng: 2.3631,
     menu: [
@@ -299,7 +262,7 @@ const bars = [{
     link: 'https://www.instagram.com/fikaparis/'
   }
 ];
-// Composant principal Home
+
 export default function Home() {
   const [selectedShop, setSelectedShop] = useState(null);
   const [page, setPage] = useState(1);
